@@ -23,8 +23,10 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call([
+            UserSeeder::class,
             PenyakitSeeder::class,
             GejalaSeeder::class,
+            BasisPengetahuanSeeder::class,
         ]);
     }
 }

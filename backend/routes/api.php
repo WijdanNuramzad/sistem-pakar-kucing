@@ -7,6 +7,9 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
+Route::post('/login', [App\Http\Controllers\Api\AuthController::class, 'login']);
+Route::post('/logout', [App\Http\Controllers\Api\AuthController::class, 'logout'])->middleware('auth:sanctum');
+
 Route::apiResource('/penyakit', App\Http\Controllers\Api\PenyakitController::class);
 Route::apiResource('/gejala', App\Http\Controllers\Api\GejalaController::class);
 
