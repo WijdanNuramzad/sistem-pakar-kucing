@@ -20,7 +20,7 @@ export default function Gejala({ onNav }: GejalaProps) {
 
   const fetchData = async () => {
     try {
-      const res = await axios.get("http://127.0.0.1:8000/api/gejala");
+      const res = await axios.get("https://api-pakarkucing.kesug.com/api/gejala");
       setGejala(res.data);
     } catch (err) {
       console.error(err);
@@ -55,9 +55,9 @@ export default function Gejala({ onNav }: GejalaProps) {
     try {
       const payload = { ...formData, bobot: parseFloat(formData.bobot) || 0 };
       if (modal === "add") {
-        await axios.post("http://127.0.0.1:8000/api/gejala", payload);
+        await axios.post("https://api-pakarkucing.kesug.com/api/gejala", payload);
       } else if (modal === "edit") {
-        await axios.put(`http://127.0.0.1:8000/api/gejala/${formData.id}`, payload);
+        await axios.put(`https://api-pakarkucing.kesug.com/api/gejala/${formData.id}`, payload);
       }
       setModal(null);
       setSelected(null);
@@ -83,7 +83,7 @@ export default function Gejala({ onNav }: GejalaProps) {
   const confirmDelete = async () => {
     if (!selected) return;
     try {
-      await axios.delete(`http://127.0.0.1:8000/api/gejala/${selected.id}`);
+      await axios.delete(`https://api-pakarkucing.kesug.com/api/gejala/${selected.id}`);
       setModal(null);
       fetchData();
       Swal.fire({

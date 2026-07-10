@@ -20,7 +20,7 @@ export default function Penyakit({ onNav }: PenyakitProps) {
 
   const fetchData = async () => {
     try {
-      const res = await axios.get("http://127.0.0.1:8000/api/penyakit");
+      const res = await axios.get("https://api-pakarkucing.kesug.com/api/penyakit");
       setDiseases(res.data);
     } catch (err) {
       console.error(err);
@@ -55,9 +55,9 @@ export default function Penyakit({ onNav }: PenyakitProps) {
 
     try {
       if (modal === "add") {
-        await axios.post("http://127.0.0.1:8000/api/penyakit", formData);
+        await axios.post("https://api-pakarkucing.kesug.com/api/penyakit", formData);
       } else if (modal === "edit" && selected) {
-        await axios.put(`http://127.0.0.1:8000/api/penyakit/${selected.id}`, formData);
+        await axios.put(`https://api-pakarkucing.kesug.com/api/penyakit/${selected.id}`, formData);
       }
       setModal(null);
       setSelected(null);
@@ -80,7 +80,7 @@ export default function Penyakit({ onNav }: PenyakitProps) {
   const confirmDelete = async () => {
     if (!selected) return;
     try {
-      await axios.delete(`http://127.0.0.1:8000/api/penyakit/${selected.id}`);
+      await axios.delete(`https://api-pakarkucing.kesug.com/api/penyakit/${selected.id}`);
       setModal(null);
       fetchData();
       Swal.fire({

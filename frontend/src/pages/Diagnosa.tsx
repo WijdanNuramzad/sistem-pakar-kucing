@@ -27,7 +27,7 @@ export default function Diagnosa({ onNav }: DiagnosaProps) {
   useEffect(() => {
     const fetchGejala = async () => {
       try {
-        const res = await axios.get("http://127.0.0.1:8000/api/gejala");
+        const res = await axios.get("https://api-pakarkucing.kesug.com/api/gejala");
         setGejalaList(res.data);
       } catch (err) {
         console.error(err);
@@ -62,7 +62,7 @@ export default function Diagnosa({ onNav }: DiagnosaProps) {
         gejala_ids: Array.from(selected)
       };
 
-      const res = await axios.post("http://127.0.0.1:8000/api/diagnosa", payload);
+      const res = await axios.post("https://api-pakarkucing.kesug.com/api/diagnosa", payload);
       
       // Simpan hasil ke sessionStorage untuk diakses oleh Hasil, Perhitungan, dll
       sessionStorage.setItem("diagnosa_result", JSON.stringify(res.data));

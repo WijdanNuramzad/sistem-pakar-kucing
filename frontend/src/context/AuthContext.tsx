@@ -46,7 +46,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const logout = async () => {
     try {
       if (token) {
-        await axios.post("http://127.0.0.1:8000/api/logout");
+        await axios.post("https://api-pakarkucing.kesug.com/api/logout");
       }
     } catch (e) {
       console.error(e);

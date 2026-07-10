@@ -11,7 +11,7 @@ export default function KamusPenyakit() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get("http://127.0.0.1:8000/api/penyakit");
+        const res = await axios.get("https://api-pakarkucing.kesug.com/api/penyakit");
         setPenyakit(res.data);
       } catch (err) {
         console.error("Gagal mengambil data penyakit");

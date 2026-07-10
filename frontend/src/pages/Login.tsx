@@ -17,7 +17,7 @@ export default function Login() {
     setLoading(true);
     setError("");
     try {
-      const res = await axios.post("http://127.0.0.1:8000/api/login", {
+      const res = await axios.post("https://api-pakarkucing.kesug.com/api/login", {
         email: email,
         password: pass,
       });

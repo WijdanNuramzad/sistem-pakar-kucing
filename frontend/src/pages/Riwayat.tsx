@@ -19,7 +19,7 @@ export default function Riwayat({ onNav }: RiwayatProps) {
 
   const fetchRiwayat = async () => {
     try {
-      const res = await axios.get("http://127.0.0.1:8000/api/diagnosa/riwayat");
+      const res = await axios.get("https://api-pakarkucing.kesug.com/api/diagnosa/riwayat");
       setRiwayat(res.data);
     } catch (err) {
       console.error(err);
@@ -35,7 +35,7 @@ export default function Riwayat({ onNav }: RiwayatProps) {
   const confirmDelete = async () => {
     if (!selected) return;
     try {
-      await axios.delete(`http://127.0.0.1:8000/api/diagnosa/riwayat/${selected.id}`);
+      await axios.delete(`https://api-pakarkucing.kesug.com/api/diagnosa/riwayat/${selected.id}`);
       setModal(null);
       fetchRiwayat();
     } catch (err) {

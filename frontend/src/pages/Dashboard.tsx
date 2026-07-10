@@ -25,7 +25,7 @@ export default function Dashboard({ onNav }: DashboardProps) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get("http://127.0.0.1:8000/api/dashboard");
+        const res = await axios.get("https://api-pakarkucing.kesug.com/api/dashboard");
         setData(res.data);
       } catch (err) {
         console.error("Failed to load dashboard data", err);
