@@ -4,6 +4,9 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use App\Models\Penyakit;
+use App\Models\Gejala;
 
 class BasisPengetahuanSeeder extends Seeder
 {
@@ -12,38 +15,46 @@ class BasisPengetahuanSeeder extends Seeder
      */
     public function run(): void
     {
-        $penyakits = \App\Models\Penyakit::all();
-        $gejalas = \App\Models\Gejala::all();
+        DB::table('basis_pengetahuan')->delete();
 
-        if ($penyakits->isEmpty() || $gejalas->isEmpty()) {
-            return;
-        }
+        $rules = [
+            'PK01' => ['GJ01', 'GJ02', 'GJ03', 'GJ04', 'GJ05', 'GJ06', 'GJ07', 'GJ08', 'GJ09', 'GJ10'],
+            'PK02' => ['GJ22', 'GJ23'],
+            'PK03' => ['GJ18', 'GJ19', 'GJ14', 'GJ11', 'GJ05', 'GJ21', 'GJ24'],
+            'PK04' => ['GJ12', 'GJ15', 'GJ06', 'GJ16', 'GJ17', 'GJ19', 'GJ20', 'GJ08', 'GJ10'],
+            'PK05' => ['GJ24', 'GJ25', 'GJ22', 'GJ26'],
+            'PK06' => ['GJ27', 'GJ28', 'GJ29'],
+            'PK07' => ['GJ30', 'GJ31', 'GJ32'],
+            'PK08' => ['GJ33', 'GJ34', 'GJ27'],
+            'PK09' => ['GJ05', 'GJ04'],
+            'PK10' => ['GJ11', 'GJ12', 'GJ13', 'GJ14', 'GJ21'],
+            'PK11' => ['GJ22', 'GJ24', 'GJ26'],
+            'PK12' => ['GJ02', 'GJ35', 'GJ36'],
+            'PK13' => ['GJ37', 'GJ03', 'GJ38', 'GJ36', 'GJ39'],
+        ];
 
-        // Mapping dummy sederhana (misal, setiap penyakit punya 3-5 gejala yang berbeda)
+        $penyakits = Penyakit::all()->keyBy('kode');
+        $gejalas = Gejala::all()->keyBy('kode');
+
         $mappings = [];
-        
-        foreach ($penyakits as $index => $penyakit) {
-            // Ambil 4 gejala per penyakit berdasarkan indeks agar distribusinya merata tapi tumpang tindih
-            $startIndex = ($index * 3) % $gejalas->count();
-            
-            for ($i = 0; $i < 4; $i++) {
-                $gejalaIndex = ($startIndex + $i) % $gejalas->count();
-                $gejalaId = $gejalas[$gejalaIndex]->id;
-                
+
+        foreach ($rules as $kodePenyakit => $kodeGejalas) {
+            $penyakit = $penyakits->get($kodePenyakit);
+            if (!$penyakit) continue;
+
+            foreach ($kodeGejalas as $kodeGejala) {
+                $gejala = $gejalas->get($kodeGejala);
+                if (!$gejala) continue;
+
                 $mappings[] = [
                     'penyakit_id' => $penyakit->id,
-                    'gejala_id' => $gejalaId,
+                    'gejala_id' => $gejala->id,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ];
             }
         }
 
-        // Hapus duplikat just in case
-        $mappings = collect($mappings)->unique(function ($item) {
-            return $item['penyakit_id'] . '-' . $item['gejala_id'];
-        })->toArray();
-
-        \Illuminate\Support\Facades\DB::table('basis_pengetahuan')->insert($mappings);
+        DB::table('basis_pengetahuan')->insert($mappings);
     }
 }
